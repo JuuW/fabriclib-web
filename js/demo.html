@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<div>
+
+    <table id="fabric_table">
+        <tr class="input">
+            <td>
+                <span>Hanger No.</span>
+            </td>
+            <td>
+                <input class="required" id="hangerNo" name="hangerNo" type="text" />
+            </td>
+        </tr>
+
+        <tr class="input">
+            <td>
+                <span>Construction</span>
+            </td>
+            <td>
+                <input id="cstructnWarp" class="required" name="cstructnWarp" type="text" />
+                <input id="cstructnWeft" name="cstructnWeft" type="text" />
+            </td>
+        </tr>
+
+
+        <tr class="input">
+            <td>
+                <span>Yarn Size</span>
+            </td>
+            <td>
+                <input id="yarnWarp" name="yarnWarp" type="text" />
+                <input id="yarnWeft" name="yarnWeft" type="text" />
+            </td>
+        </tr>
+
+        <tr class="input">
+            <td>
+                <span>Content</span>
+            </td>
+            <td>
+                <input id="content" name="content" type="text" />
+            </td>
+        </tr>
+
+        <tr class="input">
+            <td>
+                <span>Status</span>
+            </td>
+            <td>
+                <input id="status" name="status" type="text" />
+            </td>
+        </tr>
+
+        <tr class="input">
+            <td>
+                <span>Weaving</span>
+            </td>
+            <td>
+                <input id="weaving" name="weaving" type="text" />
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        <button id="add_fabric">Add</button>
+    </div>
+
+</div>
+<script>
+$(document).ready(function() {
+
+    addRequireStar($(".required"));
+
+    $("#add_fabric").click(function() {
+
+        if (!isEmpty($(".required"))) {
+            requestAddFabric()
+        } else {
+            $("#fabric_table").after("<div><span class='empty_message'>Please check input data</span></div>");
+        }
+    });
+
+});
+
+function isEmpty(items) {
+    var result = false;
+    for (var item in items) {
+        if (item.val().isEmpty()) {
+            item.css({
+                "background-color": "red"
+            });
+            item.after("<span class='empty_message'>can't be empty!</span>");
+            result = true;
+        }
+    };
+
+    return result;
+
+}
+
+function addRequireStar(items) {
+	
+    // for (var item in items) {
+        $(".required").after("*");
+    // }
+
+    // for (var i = items.length - 1; i >= 0; i--) {
+    // 	items[i].after("*")
+    // };
+
+}
+function d(){
+
+}
+function requestAddFabric() {
+    $("#footer").html("");
+    $.ajax({
+        type: "post",
+        url: "./AddFabric",
+        cache: false,
+        data: {
+            username: $("#add_user_username").val(),
+            password: $("#add_user_password").val()
+        },
+        // cache:false,
+        // dataType:'json',
+        success: function(data) {
+            $("#footer").html(data);
+        },
+        error: function() {
+            $("#footer").html("error");
+        }
+    });
+}
+</script>
+</body>
+</html>

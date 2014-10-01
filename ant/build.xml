@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="fabricLib-lib" default="build" basedir="../">
+
+	<path id="classpath">
+		<fileset dir="lib" includes="**/*.jar" />
+	</path>
+	<property file="ant/build.properties" />
+	<!--<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" /> -->
+	<tstamp>
+		<format property="touch.time" pattern="yyyy-MM-dd hh:mm" />
+	</tstamp>
+
+	<target name="dirs">
+		<delete dir="build" />
+		<mkdir dir="build/temp" />
+		<mkdir dir="build/deploy" />
+	</target>
+
+
+
+
+	<target name="build" depends="dirs">
+
+		<copy todir="build/temp">
+			<fileset dir="./" excludes="ant/** build/** bin/**" />
+		</copy>
+
+
+		<zip destfile="build/deploy/${app_name}.war" basedir="build/temp" />
+		
+	</target>
+
+
+</project>

@@ -1,0 +1,30 @@
+body {
+  overflow-y: scroll; }
+
+.main.container {
+  margin-top: 70px; }
+
+.required::after {
+  content: "*";
+  right: 0px;
+  top: 10px;
+  border: 0px solid;
+  position: absolute; 
+  color: red;
+  }
+
+.couple-group .form-control {
+  box-sizing: border-box;
+  float: left;
+  width: 45%; }
+.couple-group .form-control:first-child {
+  margin-right: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0; }
+.couple-group .form-control:last-child {
+  margin-left: 2px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0; }
+
+.form-control.error {
+  border: 1px solid red; }

@@ -1,0 +1,52 @@
+<div>
+<ul class="nav nav-pills nav-stacked fabric-menu">
+  <li id="addFabric"><a href>Add Fabric</a></li>
+	<li id="uploadFabric"><a href >Upload Fabric</a></li>
+	<li id="searchFabric"><a href >Search Fabric</a></li>
+</ul>
+</div>
+
+<script>
+(function() {
+	$(document).ready(function() {
+
+		$("#addFabric").click(function(e) {
+			e.preventDefault();
+			getFabricPage("subpages/addFabric.html");
+			activeMenu("addFabric");
+		});
+		
+		$("#uploadFabric").click(function(e) {
+			e.preventDefault();
+			getFabricPage("subpages/uploadFabric.html");
+			activeMenu("uploadFabric");
+		});
+		
+		$("#searchFabric").click(function(e) {
+			e.preventDefault();
+			getFabricPage("subpages/searchFabric.html");
+			activeMenu("searchFabric");
+		});
+	});
+
+	function getFabricPage(pageUrl) {
+		$("#middle").html("");	
+		$.ajax({
+			type : "get",
+			url : pageUrl,
+			cache : false,
+			success : function(data) {
+				$("#middle").html(data);
+			},
+			error : function() {
+				$("#middle").html("error");
+			}
+		});
+	}
+	
+	function activeMenu(menu) {
+		$(".fabric-menu li.active").removeClass("active");
+		$(".fabric-menu #" + menu).addClass("active");
+	}
+})();	
+</script>

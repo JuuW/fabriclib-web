@@ -1,0 +1,52 @@
+.barcodearea {
+	margin-bottom: 10px;
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 30px;
+	color: inherit;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #eeeeee;
+	
+}
+
+#more_option {
+	padding: 10px;
+	color: inherit;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	background-color: #eeeeee;
+}
+
+table.barcode_extend td
+{
+	padding-left:10px
+}
+
+.fabric_img_area {
+	padding-left: 10px;
+	margin-bottom: 10px;
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 30px;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+	margin: auto;
+	display: inline;
+}
+
+
+td.details-control {
+    /*  background: url('../img/details_open.png') no-repeat center center; */
+      cursor: pointer;
+}
+tr.shown td.details-control {
+  /*   background: url('../img/details_close.png') no-repeat center center;*/
+  cursor: pointer;
+}
+

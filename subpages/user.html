@@ -1,0 +1,45 @@
+<ul class="nav nav-pills nav-stacked user-menu">
+    <li id="addUser"><a href>Add User</a></li>
+    <li id="searchUser"><a href>Search User</a></li>
+</ul>
+
+<script>
+    (function() {
+        $(document).ready(function() {
+
+            $("#addUser").click(function(e) {
+                e.preventDefault();
+                getUserPage("subpages/addUser.html");
+                activeMenu("addUser");
+            });
+            $("#searchUser").click(function(e) {
+                e.preventDefault();
+                getUserPage("subpages/searchUser.html");
+                activeMenu("searchUser");
+            });
+
+
+        });
+
+        function getUserPage(pageUrl) {
+            $("#middle").html("");
+            $.ajax({
+                type : "get",
+                url : pageUrl,
+                cache : false,
+                success : function(data) {
+                    $("#middle").html(data);
+                },
+                error : function() {
+                    $("#middle").html("error");
+                }
+            });
+        }
+
+        function activeMenu(menu) {
+            $(".user-menu li.active").removeClass("active");
+            $(".user-menu #" + menu).addClass("active");
+        }
+    })();
+
+</script>
