@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <form id="addFabricForm" class="form-horizontal" role="form"
-            action="./AddFabric.do">
+            action="./AddFabric.do" enctype="multipart/form-data" method="post">
         <div class="form-group">
             <label for="hangerNo" class="col-sm-2 control-label">Hanger No.</label>
             <div class="col-sm-10 required">
@@ -80,7 +80,7 @@
         <div class="form-group">
           <label for="file" class="col-sm-2 control-label">Picture</label>
             <div class="col-sm-10">
-               <input type="file" id="fabric_upload" name ="file">
+               <input type="file" id="fabric_upload" name ="file"  ACCEPT="image/jpeg">
             </div>
         </div>
         <div class="form-group">

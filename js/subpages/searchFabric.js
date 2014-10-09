@@ -134,6 +134,8 @@
 		
 		$("#"+barcodeid).JsBarcode(hangerNo_,{displayValue: false});
 		$("#"+fabricImgid).attr("src","./img/fabric_" + id_ + ".jpg");
+		$("#"+fabricImgid).attr("onerror","this.src='./img/fabric_fabric_notexist.jpg");
+		
 		$("#"+fabricImgFrameid).css("height",$("#"+fabricExtid).css("height"));
 
 	}
