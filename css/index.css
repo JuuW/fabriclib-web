@@ -24,6 +24,9 @@ table.barcode_extend td
 {
 	padding-left:10px
 }
+table.barcode_extend{
+	padding-bottom:10px
+}
 
 .fabric_img_area {
 	padding-left: 10px;
@@ -34,8 +37,8 @@ table.barcode_extend td
 }
 
 img {
-	max-width: 100%;
-	max-height: 100%;
+	max-width: 80%;
+	max-height: 80%;
 	margin: auto;
 	display: inline;
 }
@@ -50,3 +53,9 @@ tr.shown td.details-control {
   cursor: pointer;
 }
 
+.clicklink{
+	 cursor: pointer;
+	 margin-right: 10px;
+	 margin-left: 10px;
+	 float: left;
+}
