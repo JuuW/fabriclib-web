@@ -52,7 +52,7 @@
                 $("#footer").html("");
 
                 var data = new FormData($(this)[0]);
-
+                $("add_fabric").attr("disabled", true); 
                 $.ajax({
                     type: "post",
                     url: formURL,
@@ -63,9 +63,11 @@
                     // dataType:'json',
                     success: function(dataStr) {
                     	doSuccess(dataStr) ;
+                    	$("#add_fabric").removeAttr("disabled");
                     },
                     error: function() {
                         $("#footer").html("error");
+                        $("#add_fabric").removeAttr("disabled");
                     }
                 });
                 
