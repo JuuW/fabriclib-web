@@ -6,17 +6,18 @@
 			"orderable" : false,
 			"data" : null,
 			"defaultContent" : '<a>More..</a>',
-				title : "More.."
+			title : "More.."
 		}, {
 			"data" : "id",
 			title : "Id"
 		}, {
 			"data" : "hangerNo",
 			title : "Hanger No.",
-			"width": "15%"
+			"width" : "15%"
 		}, {
 			"data" : "inputDate",
-			title : "Input Date"
+			title : "Input Date",
+			"width" : "15%"
 		}, {
 			"data" : "cstructnWarp",
 			title : "CstructnWarp"
@@ -29,7 +30,7 @@
 		}, {
 			"data" : "content",
 			title : "Content",
-				"width": "20%"
+			"width" : "20%"
 		}, {
 			"data" : "status",
 			title : "Status"
@@ -48,13 +49,15 @@
 		}, {
 			"data" : "article",
 			title : "Article",
-			"width": "15%"
+			"width" : "15%"
 		}, {
 			"data" : "originalPrice",
-			title : "Original Price"
+			title : "Original Price",
+			"width" : "10%"
 		}, {
 			"data" : "finalPrice",
-			title : "Final Price"
+			title : "Final Price",
+			"width" : "10%"
 		} ],
 		// "scrollY" : 200,
 		"scrollX" : true
@@ -91,83 +94,154 @@
 
 				});
 	}
-	function printBarcode(){
-		 $(".printBarcode").click(function(e) {
-	            var w = window.open('about:blank');
-	            var html = $(e.target).closest("td").find(".barcodearea").html();
-	            w.document.body.innerHTML = html;
-	            w.print();
-	        });
+	function printBarcode() {
+		$(".printBarcode").click(function(e) {
+			var w = window.open('about:blank');
+			var html = $(e.target).closest("td").find(".barcodearea").html();
+			w.document.body.innerHTML = html;
+			w.print();
+		});
 	}
-	function deleteBarcode(){
-		 $(".deleteBarcode").click(function(e) {
-			 if(confirm("Are you sure you want to delete this Entry?")) {
-				 var id_ = $(e.target).closest("td").find("#hangerId").attr("value");
-				 $.ajax({
-		                type : "post",
-		                url : "./DeleteFabric.do",
-		                cache : false,
-		                data : {"hangerId":id_},
-		                success : function(data) {
-//		                	alert(data);
-		                	if(data == "true"){   		
-		                		$(e.target).closest("tr").prev().addClass('deleting');
-		                		$(e.target).closest("tr").remove();
-//		                	if ( $(this).hasClass('selected') ) {
-//		                        $(this).removeClass('selected');
-//		                    }
-//		                    else {
-//		                        table.$('tr.selected').removeClass('selected');
-//		                        $(this).addClass('selected');
-//		                    }
-		                		fabric_table.api().row(".deleting").remove().draw( false );
-		                	}else{
-		                		alert("Deleting is failed!");
-		                	}
-		                },
-		                error : function() {
-		                	alert(data);
-		                }
-		            });
-			 }
-	        });
+	function deleteBarcode() {
+		$(".deleteBarcode")
+				.click(
+						function(e) {
+							if (confirm("Are you sure you want to delete this Entry?")) {
+								var id_ = $(e.target).closest("td").find(
+										"#hangerId").attr("value");
+								$.ajax({
+									type : "post",
+									url : "./DeleteFabric.do",
+									cache : false,
+									data : {
+										"hangerId" : id_
+									},
+									success : function(data) {
+										// alert(data);
+										if (data == "true") {
+											$(e.target).closest("tr").prev()
+													.addClass('deleting');
+											$(e.target).closest("tr").remove();
+											// if ( $(this).hasClass('selected')
+											// ) {
+											// $(this).removeClass('selected');
+											// }
+											// else {
+											// table.$('tr.selected').removeClass('selected');
+											// $(this).addClass('selected');
+											// }
+											fabric_table.api().row(".deleting")
+													.remove().draw(false);
+										} else {
+											alert("Deleting is failed!");
+										}
+									},
+									error : function() {
+										alert(data);
+									}
+								});
+							}
+						});
 	}
-	function modifyBarcode(){
-		 $(".modifyBarcode").click(function(e) {
-	          alert("modify");
-	        });
-	}
-	function addPic(){
-		$(".addImageForm").submit(function(event) {
+	function modifyBarcode() {
+		$(".modifyBarcode").click(function(e) {
+			var tr = $(e.target).closest("tr").prev();
+			var tds = tr.children("td");
 
-            event.preventDefault();
-            
-           var path = $(event.target).children("#fabric_upload").val();
-           if(path == ""){
-        	   alert("Please select image path!");
-        	   return true;
-           }
+			var columns = fabric_table.fnSettings().aoColumns; // you can find
+																// all sorts of
+																// goodies in
+																// the Settings
+			for (var i = 4; i < 16; i++) {
+				setInputFormat(tds[i], columns[i]);
+			}
+			tr.addClass('editing');
+			taggleDisplayModify();
+		});
+	}
 
-            var $form = $(event.target);
-            var postData = $form.serializeArray();
-            var formURL = $form.attr( "action" );
-                var data = new FormData($form[0]);
-                $.ajax({
-                    type: "post",
-                    url: formURL,
-                    cache: false,
-                    data: data,
-                    contentType: false,
-                    processData :false,
-                    success: function(dataStr) {
-                    	var imgUrl = $(event.target).parent().prev().attr("src")+"?"+Math.random();
-                    	$(event.target).parent().prev().attr("src",imgUrl);
-                    },
-                    error: function() {
-                    	alert("error");
-                    }
-                });
-        });
+	function submitBarcode() {
+		$(".submitBarcode").click(function(e) {
+
+			taggleDisplayModify();
+		});
+	}
+
+	function cancelBarcode() {
+		$(".cancelBarcode").click(function(e) {
+			var tr = $(e.target).closest("tr").prev();
+			var tds = tr.children("td");
+
+			var columns = fabric_table.fnSettings().aoColumns; 
+	
+			tr.removeClass('editing');
+			taggleDisplayModify();
+		});
+	}
+
+	// switch display of modify,cancel and submit/
+	function taggleDisplayModify() {
+
+		if ($(".submitBarcode").css("display") == "none") {
+			$(".submitBarcode").css("display", "");
+		} else {
+			$(".submitBarcode").css("display", "none");
+		}
+		if ($(".modifyBarcode").css("display") == "none") {
+			$(".modifyBarcode").css("display", "");
+		} else {
+			$(".modifyBarcode").css("display", "none");
+		}
+		if ($(".cancelBarcode").css("display") == "none") {
+			$(".cancelBarcode").css("display", "");
+		} else {
+			$(".cancelBarcode").css("display", "none");
+		}
+	}
+
+	function setInputFormat(td, column) {
+		var value = $(td).html();
+		var input = "<input style='width:" + column.sWidth + "' name='"
+				+ column.data + "' type='text' value='" + value + "' />";
+		$(td).html(input);
+	}
+	function addPic() {
+		$(".addImageForm")
+				.submit(
+						function(event) {
+
+							event.preventDefault();
+
+							var path = $(event.target).children(
+									"#fabric_upload").val();
+							if (path == "") {
+								alert("Please select image path!");
+								return true;
+							}
+
+							var $form = $(event.target);
+							var postData = $form.serializeArray();
+							var formURL = $form.attr("action");
+							var data = new FormData($form[0]);
+							$.ajax({
+								type : "post",
+								url : formURL,
+								cache : false,
+								data : data,
+								contentType : false,
+								processData : false,
+								success : function(dataStr) {
+									var imgUrl = $(event.target).parent()
+											.prev().attr("src")
+											+ "?" + Math.random();
+									$(event.target).parent().prev().attr("src",
+											imgUrl);
+								},
+								error : function() {
+									alert("error");
+								}
+							});
+						});
 	}
 
 	function addRow(tr, td) {
@@ -179,62 +253,102 @@
 		var content_ = $(nTds[7]).text();
 		var fanishing_ = $(nTds[10]).text();
 		var width_ = $(nTds[11]).text();
-		
+
 		var barcodeid = "barcode_" + id_;
 		var fabricImgid = "fabricImg_" + id_;
 		var fabricExtid = "fabricExt_" + id_;
 		var fabricImgFrameid = "fabricImgFrame_" + id_;
 		var actionUrl = "./UpdateFabricPic.do";
-		var htmlStr = 	
-			"<tr class='fabric_extend'>"
-				+ "<td colspan='"+columnNum+"'>" 
-					+ "<div class='container-fluid'>"
-						+ "<div  class='printBarcode clicklink'  fabricExtid = '"+fabricExtid+"' ><a>Print</a></div>"
-						+ "<div  class='deleteBarcode clicklink' fabricExtid = '"+fabricExtid+"' ><a>Delete</a></div>"
-						+ "<div  class='modifyBarcode clicklink' fabricExtid = '"+fabricExtid+"' ><a>Modify</a></div>"
-					+ "</div>"
-				 	+ "<div class='container-fluid'>"
-				 			+ "<div class='barcodearea col-sm-4 container-fluid'>"
-					 			+ "<div  id='"+fabricExtid+"'  >"
-						 			+ "<table  class='barcode_extend'>"
-						 				+ "<tr><td>Hanger No. </td><td>"+hangerNo_+"</td></tr>" 
-						 				+ "<tr><td>Content  </td><td>"+content_+"</td></tr>" 
-						 				+ "<tr><td>Width  </td><td>"+width_+"</td></tr>" 
-						 				+ "<tr><td>Finishing  </td><td>"+fanishing_+"</td></tr>" 
-						 				+ "<tr><td>&nbsp;</td></tr>" 
-						 				+ "<tr><td>&nbsp;</td></tr>" 
-						 			+ "</table>"
-						 			+ "<img id='"+barcodeid+"'></br>"
-					 			+ "</div>"
-				 			+"</div>"
-					 		+ "<div id='"+fabricImgFrameid+"' class='fabric_img_area col-sm-4 container-fluid'>"
-					 			+ "<img id='"+fabricImgid+"' src=''>" 
-					 			+ "<div>" 
-						 			+ "<form class='addImageForm' action='"+actionUrl+"' enctype='multipart/form-data' method='post'>"
-							 			+ "<input  type='hidden' id='hangerId' name='hangerId' value='"+id_+"'>"
-							 			+ "<input   type='file' id='fabric_upload' name ='file'  ACCEPT='image/jpeg'>"
-							 			+ "<button type='submit' class='btn btn-primary' id='add_fabric'>Add or Update Pic</button>"
-						 			+ "</form>"
-					 			+ "</div>"
-					 		+ "</div>" 
-				 	+ "</div>"
-				+ "</td>" 
-			+ "</tr>";
-        
+		var htmlStr = "<tr class='fabric_extend'>" + "<td colspan='"
+				+ columnNum
+				+ "'>"
+				+ "<div class='container-fluid'>"
+				+ "<div  class='printBarcode clicklink'  fabricExtid = '"
+				+ fabricExtid
+				+ "' ><a>Print</a></div>"
+				+ "<div  class='deleteBarcode clicklink' fabricExtid = '"
+				+ fabricExtid
+				+ "' ><a>Delete</a></div>"
+				+ "<div  class='modifyBarcode clicklink' fabricExtid = '"
+				+ fabricExtid
+				+ "' ><a>Modify</a></div>"
+				+ "<div  class='submitBarcode clicklink' fabricExtid = '"
+				+ fabricExtid
+				+ "' ><a>Submit</a></div>"
+				+ "<div  class='cancelBarcode clicklink' fabricExtid = '"
+				+ fabricExtid
+				+ "' ><a>Cancel</a></div>"
+				+ "</div>"
+				+ "<div class='container-fluid'>"
+				+ "<div class='barcodearea col-sm-4 container-fluid'>"
+				+ "<div  id='"
+				+ fabricExtid
+				+ "'  >"
+				+ "<table  class='barcode_extend'>"
+				+ "<tr><td>Hanger No. </td><td>"
+				+ hangerNo_
+				+ "</td></tr>"
+				+ "<tr><td>Content  </td><td>"
+				+ content_
+				+ "</td></tr>"
+				+ "<tr><td>Width  </td><td>"
+				+ width_
+				+ "</td></tr>"
+				+ "<tr><td>Finishing  </td><td>"
+				+ fanishing_
+				+ "</td></tr>"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "<tr><td>&nbsp;</td></tr>"
+				+ "</table>"
+				+ "<img id='"
+				+ barcodeid
+				+ "'></br>"
+				+ "</div>"
+				+ "</div>"
+				+ "<div id='"
+				+ fabricImgFrameid
+				+ "' class='fabric_img_area col-sm-4 container-fluid'>"
+				+ "<img id='"
+				+ fabricImgid
+				+ "' src=''>"
+				+ "<div>"
+				+ "<form class='addImageForm' action='"
+				+ actionUrl
+				+ "' enctype='multipart/form-data' method='post'>"
+				+ "<input  type='hidden' id='hangerId' name='hangerId' value='"
+				+ id_
+				+ "'>"
+				+ "<input   type='file' id='fabric_upload' name ='file'  ACCEPT='image/jpeg'>"
+				+ "<button type='submit' class='btn btn-primary' id='add_fabric'>Add or Update Pic</button>"
+				+ "</form>" + "</div>" + "</div>" + "</div>" + "</td>"
+				+ "</tr>";
+
 		tr.after(htmlStr);
-		
+		$(".modifyBarcode").css("display", "");
+		$(".submitBarcode").css("display", "none");
+		$(".cancelBarcode").css("display", "none");
 		printBarcode();
 		deleteBarcode();
 		modifyBarcode();
-        addPic();
-        
+		submitBarcode();
+		cancelBarcode();
+
+		addPic();
+
 		var thisTr = $(tr).next();
+
+		$("#" + barcodeid).JsBarcode(hangerNo_, {
+			displayValue : false
+		});
 		
+		$("#" + fabricImgid).attr("src", "./img/fabric_" + id_ + ".jpg");
 		
-		$("#"+barcodeid).JsBarcode(hangerNo_,{displayValue: false});
-		$("#"+fabricImgid).attr("src","./img/fabric_" + id_ + ".jpg");
-		
-		$("#"+fabricImgFrameid).css("height",$("#"+fabricExtid).css("height"));
+		// set image height
+		var imgHeight = (document.getElementById(fabricExtid).offsetHeight*0.8)+"px";
+		$("#" + fabricImgid).css("height", imgHeight);
+
+		$("#" + fabricImgFrameid).css("height",
+				$("#" + fabricExtid).css("height"));
 	}
 
 	$("#searchFabricForm").submit(function(event) {
@@ -245,7 +359,7 @@
 
 		$("#footer").html("");
 		$("#search_fabric").attr("disabled", true);
-		
+
 		$.ajax({
 			type : "post",
 			url : formURL,

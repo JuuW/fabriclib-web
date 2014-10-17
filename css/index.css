@@ -31,14 +31,13 @@ table.barcode_extend{
 .fabric_img_area {
 	padding-left: 10px;
 	margin-bottom: 10px;
-	font-size: 18px;
+	/** font-size: 18px;
 	font-weight: 200;
-	line-height: 30px;
+	 line-height: 30px; **/
 }
 
 img {
-	max-width: 80%;
-	max-height: 80%;
+	
 	margin: auto;
 	display: inline;
 }
