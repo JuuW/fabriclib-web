@@ -1,14 +1,19 @@
 <div>
 <ul class="nav nav-pills nav-stacked fabric-menu">
-  <li id="addFabric"><a href>Add Fabric</a></li>
-	<li id="uploadFabric"><a href >Upload Fabric</a></li>
-	<li id="searchFabric"><a href >Search Fabric</a></li>
+  <li id="addFabric"><a id="AddFabricHref" ></a></li>
+	<li id="uploadFabric"><a id="UploadFabricHref"></a></li>
+	<li id="searchFabric"><a id="SearchFabricHref"></a></li>
 </ul>
 </div>
 
 <script>
 (function() {
 	$(document).ready(function() {
+		
+			$("#AddFabricHref").html(lang.AddFabric);
+			$("#UploadFabricHref").html(lang.UploadFabric);
+			$("#SearchFabricHref").html(lang.SearchFabric);
+		
 
 		$("#addFabric").click(function(e) {
 			e.preventDefault();
@@ -31,6 +36,7 @@
 
 	function getFabricPage(pageUrl) {
 		$("#middle").html("");	
+		$("#footer").html("");	
 		$.ajax({
 			type : "get",
 			url : pageUrl,

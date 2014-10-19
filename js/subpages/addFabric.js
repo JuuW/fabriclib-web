@@ -1,5 +1,6 @@
  (function() {
-
+	 $("#add_fabric").html(lang.Add);
+	 $("#addFabricReset").html(lang.Reset);
         function checkFormField($form) {
             var error = false;
             var hangerNo = $form.find("input[name='hangerNo']"),
@@ -37,6 +38,10 @@
 			}
         }
 
+        $("#addFabricReset").click(function(e){
+        	$('#addFabricForm')[0].reset();
+        });
+        
         $( "#addFabricForm" ).submit(function( event ) {
 
             // Stop form from submitting normally
@@ -70,12 +75,9 @@
                         $("#add_fabric").removeAttr("disabled");
                     }
                 });
-                
-                
-                
-                
             } else {
-                $("#fabric_table_msg").html("<div><span class='empty_message'>Please check input data</span></div>");
+            	
+                $("#fabric_table_msg").html("<div><span class='empty_message'>"+lang.CheckInput+"</span></div>");
             }
         });
     })();

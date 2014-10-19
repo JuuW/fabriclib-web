@@ -1,4 +1,4 @@
-(function() {
+
 	
 	
     $(document).ready(function() {
@@ -39,4 +39,4 @@
         $(".main-menu li.active").removeClass("active");
         $(".main-menu #" + menu).addClass("active");
     }
-})();
+    

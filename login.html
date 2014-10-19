@@ -21,7 +21,7 @@
 	<nav class="navbar navbar-default " role="navigation">
 		<div class="container container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">FabricLib</a>
+				<a id="FabricLib" class="navbar-brand" href="#">FabricLib</a>
 			</div>
 		</div>
 	</nav>
@@ -37,7 +37,7 @@
 
 				</div>
 				<div class="form-group">
-					<label for="username_label" class="col-sm-4 control-label">Username</label>
+					<label id="usernameLable" for="username_label" class="col-sm-4 control-label">Username</label>
 					<div class="col-sm-4">
 						<input type="text" class="form-control" id="username"
 							name="username" placeholder="username">
@@ -45,7 +45,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="password_label" class="col-sm-4 control-label">Password</label>
+					<label id="passwordLable"  for="password_label" class="col-sm-4 control-label">Password</label>
 
 					<div class="col-sm-4">
 						<input class="form-control" id="passworfd" name="password"
@@ -53,7 +53,15 @@
 					</div>
 
 				</div>
+						<input class="form-control" id="language" name="language"
+							type="hidden"  />
+				<div class="form-group">
+					<label id="languageLable" for="language_label" class="col-sm-4 control-label">Language</label>
 
+					<div class="col-sm-4">
+					<select id="languageSelect" class="form-control" onchange="" name="language" ><option value='en'>English</option><option value='cn'>中文</option></select>
+					</div>
+				</div>
 
 				<div class="form-group">
 					<div class="col-sm-offset-4 col-sm-4">

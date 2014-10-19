@@ -1,11 +1,13 @@
 <ul class="nav nav-pills nav-stacked user-menu">
-    <li id="addUser"><a href>Add User</a></li>
-    <li id="searchUser"><a href>Search User</a></li>
+    <li id="addUser"><a id="AddUserHref"></a></li>
+    <li id="searchUser"><a id="SearchUserHref"></a></li>
 </ul>
 
 <script>
     (function() {
         $(document).ready(function() {
+    			$("#AddUserHref").html(lang.AddUser);
+    			$("#SearchUserHref").html(lang.SearchUser);
 
             $("#addUser").click(function(e) {
                 e.preventDefault();

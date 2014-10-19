@@ -58,3 +58,7 @@ tr.shown td.details-control {
 	 margin-left: 10px;
 	 float: left;
 }
+
+.selected{
+	background-color:gray;
+}
